@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  app:
+    image: gamekit:app
+    build: .
+    tty: true
+    env_file: configs/env/base.env
+    depends_on:
+      - rabbitmq
+    ports:
+      - 23000:23000
+    volumes:
+      - .:/app
+
+  rabbitmq:
+    image: rabbitmq:3-alpine
