@@ -2,7 +2,7 @@
 
 ## Global informations
 - Time variables are in Unix timestamp (time elaspsed since 1 January 1970) in nanoseconds.
-- Client ID is a V4 UUID generated at connection.
+- ClientID are V4 UUID generated at connection.
 
 ## Messages structures
 Client structure, used only by the proxy but we found useful to show you what is was like.
@@ -15,7 +15,7 @@ Client structure, used only by the proxy but we found useful to show you what is
 ---
 
 **Connection** message format, sent when a new client connects successfully to the proxy.
-- Topic : *client_connected*
+- Topic : *in_client_connected*
 ```go
 {
     client_id: string
@@ -26,7 +26,7 @@ Client structure, used only by the proxy but we found useful to show you what is
 ---
 
 **Disconnection** message format, sent when a client disconnects from the proxy, intentionally or not (connection lost for example).
-- Topic : *client_disconnected*
+- Topic : *in_client_disconnected*
 ```go
 {
     client_id: string
@@ -39,7 +39,7 @@ Client structure, used only by the proxy but we found useful to show you what is
 **Message** format, sent when a client emits a new message.
 
 *last_received_at* is the last message's time.
-- Topic : *client_message*
+- Topic : *in_client_message*
 ```go
 {
     client_id: string
