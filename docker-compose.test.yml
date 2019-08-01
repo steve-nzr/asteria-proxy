@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  unit:
+    image: asteria-proxy:app
+    build: .
+    env_file: configs/env/base.env
+    entrypoint: go test -v ./...
+    volumes:
+      - .:/go/src/github.com/steve-nzr/asteria-proxy

@@ -1,7 +1,9 @@
 FROM golang:1.12-alpine as builder
-WORKDIR /app
+ENV GO111MODULE on
+ENV GOPATH /go
+WORKDIR /go/src/github.com/steve-nzr/asteria-proxy
 
-RUN apk add git
+RUN apk add git gcc g++
 
 COPY . .
 

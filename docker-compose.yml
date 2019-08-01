@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   app:
-    image: gamekit:app
+    image: asteria-proxy:app
     build: .
     tty: true
     env_file: configs/env/base.env
@@ -11,7 +11,7 @@ services:
     ports:
       - 23000:23000
     volumes:
-      - .:/app
+      - .:/go/src/github.com/steve-nzr/asteria-proxy
 
   # rabbitmq:
   #   image: rabbitmq:3-alpine
