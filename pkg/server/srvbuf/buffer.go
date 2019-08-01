@@ -1,4 +1,4 @@
-package server
+package srvbuf
 
 import (
 	"log"
@@ -6,7 +6,9 @@ import (
 	"strconv"
 )
 
-var bufferSize = getBufferSize()
+// BufferSize for each message
+// env variable SERVER_MAX_DATA_LENGTH
+var BufferSize = getBufferSize()
 
 func getBufferSize() int64 {
 	len := os.Getenv("SERVER_MAX_DATA_LENGTH")

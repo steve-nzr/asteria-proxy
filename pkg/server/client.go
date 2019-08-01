@@ -7,6 +7,7 @@ import (
 	"github.com/steve-nzr/asteria-proxy/internal/channel"
 	"github.com/steve-nzr/asteria-proxy/internal/publisher"
 	"github.com/steve-nzr/asteria-proxy/pkg/logger"
+	"github.com/steve-nzr/asteria-proxy/pkg/server/srvbuf"
 )
 
 // Client holds a socket + an UUID as ClientID
@@ -38,7 +39,7 @@ func (c *Client) handle() {
 	logger.Debug("Client %s connected !", c.ClientID)
 	for {
 		c.Conn.SetReadDeadline(time.Now().Add(5 * time.Second))
-		buf := make([]byte, bufferSize)
+		buf := make([]byte, srvbuf.BufferSize)
 		len, err := c.Conn.Read(buf)
 		now := timeNow()
 
