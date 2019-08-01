@@ -1,23 +1,51 @@
 # Server SPECS
 
-Client : {
+## Global informations
+- Time variables are in Unix timestamp (time elaspsed since 1 January 1970) in nanoseconds.
+- Client ID is a V4 UUID generated at connection.
+
+## Messages structures
+Client structure, used only by the proxy but we found useful to show you what is was like.
+```go
+{
     id string
 }
+```
 
-OnConnect -> {
-    client_id_: string
-    received_at_: int64
+---
+
+**Connection** message format, sent when a new client connects successfully to the proxy.
+- Topic : *client_connected*
+```go
+{
+    client_id: string
+    received_at: int64
 }
+```
 
-OnDisconnect -> {
-    client_id_: string
-    received_at_: int64
+---
+
+**Disconnection** message format, sent when a client disconnects from the proxy, intentionally or not (connection lost for example).
+- Topic : *client_disconnected*
+```go
+{
+    client_id: string
+    received_at: int64
 }
+```
 
-OnMessage -> {
-    client_id_: string
-    received_at_: int64
-    last_received_at_: int64
+---
+
+**Message** format, sent when a client emits a new message.
+
+*last_received_at* is the last message's time.
+- Topic : *client_message*
+```go
+{
+    client_id: string
+    received_at: int64
+    last_received_at: int64
     size: int32
     data: []byte
 }
+```
