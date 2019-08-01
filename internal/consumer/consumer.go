@@ -61,6 +61,11 @@ func consumeDisconnect(s *server.Server, ch <-chan amqp.Delivery) {
 			continue
 		}
 
+		logger.Debug("Disconnecting client %s", msg.ClientID)
+		if err := s.DisconnectClient(msg.ClientID); err != nil {
+			m.Nack(false, false)
+		}
+
 		m.Ack(false)
 	}
 }
@@ -74,6 +79,9 @@ func consumeMessage(s *server.Server, ch <-chan amqp.Delivery) {
 			m.Nack(false, false)
 			continue
 		}
+
+		logger.Debug("Sending a message of length %d to %d clients", len(msg.Data), len(msg.Recipients))
+		s.SendMessage(msg.Recipients, msg.Data)
 
 		m.Ack(false)
 	}

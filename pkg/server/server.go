@@ -70,6 +70,19 @@ func (s *Server) DisconnectClient(clientID string) error {
 	return err
 }
 
+// SendMessage to client(s)
+func (s *Server) SendMessage(clients []string, data []byte) {
+	broadcast := len(clients) == 0
+	for _, c := range s.Clients {
+		if broadcast || find(clients, c.ClientID) != -1 {
+			if _, err := c.Conn.Write(data); err != nil {
+				logger.Warning("cannot write to client %s", c.ClientID)
+			}
+			logger.Debug("wrote a message to client %s", c.ClientID)
+		}
+	}
+}
+
 func (s *Server) stop(l net.Listener) {
 	now := timeNow()
 	for _, c := range s.Clients {
