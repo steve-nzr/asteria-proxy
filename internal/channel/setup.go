@@ -1,4 +1,4 @@
-package publisher
+package channel
 
 import (
 	"log"
@@ -8,25 +8,8 @@ import (
 	"github.com/steve-nzr/asteria-proxy/pkg/rabbitmq"
 )
 
-// Exchange rabbitmq
-type Exchange string
-
-const (
-	// ClientConnected exchange
-	ClientConnected Exchange = "client_connected"
-	// ClientDisonnected exchange
-	ClientDisonnected Exchange = "client_disconnected"
-	// ClientMessage exchange
-	ClientMessage Exchange = "client_message"
-)
-
-var exchanges = []Exchange{
-	ClientConnected,
-	ClientDisonnected,
-	ClientMessage,
-}
-
-var channel = initialize()
+// Channel rabbitmq that contains topics
+var Channel = initialize()
 
 func initialize() *amqp.Channel {
 	ch, err := rabbitmq.Connection.Channel()
