@@ -15,10 +15,10 @@ func Publish(exchange channel.Exchange, data interface{}) error {
 	}
 
 	return channel.Channel.Publish(
-		(string)(exchange), // exchange
-		"",                 // routing key
-		false,              // mandatory
-		false,              // immediate
+		exchange.ToString(), // exchange
+		"",                  // routing key
+		false,               // mandatory
+		false,               // immediate
 		amqp.Publishing{
 			ContentType: "application/json",
 			Body:        body,

@@ -4,6 +4,7 @@ import (
 	"net"
 	"time"
 
+	"github.com/steve-nzr/asteria-proxy/internal/channel"
 	"github.com/steve-nzr/asteria-proxy/internal/publisher"
 	"github.com/steve-nzr/asteria-proxy/pkg/logger"
 )
@@ -15,19 +16,19 @@ type Client struct {
 }
 
 func (c *Client) sendMessage(msg *publisher.OnMessage) {
-	publisher.Publish(publisher.ClientMessage, msg)
+	publisher.Publish(channel.ClientMessage, msg)
 	logger.Debug("Message with length of %d arrived from client %s !", msg.Size, c.ClientID)
 }
 
 func (c *Client) sendDisconnected(msg *publisher.OnDisconnected) {
-	publisher.Publish(publisher.ClientMessage, msg)
+	publisher.Publish(channel.ClientDisonnected, msg)
 	logger.Debug("Client %s disconnected !", c.ClientID)
 }
 
 func (c *Client) handle() {
 	defer c.Conn.Close()
 
-	publisher.Publish(publisher.ClientMessage, &publisher.OnConnected{
+	publisher.Publish(channel.ClientConnected, &publisher.OnConnected{
 		ClientID:   c.ClientID,
 		ReceivedAt: timeNow(),
 	})
@@ -63,8 +64,4 @@ func (c *Client) handle() {
 
 		last = now
 	}
-}
-
-func timeNow() int64 {
-	return time.Now().UnixNano()
 }

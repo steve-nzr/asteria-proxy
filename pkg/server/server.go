@@ -53,6 +53,23 @@ func (s *Server) Start() {
 	s.stop(l)
 }
 
+// DisconnectClient by its ID
+func (s *Server) DisconnectClient(clientID string) error {
+	for _, c := range s.Clients {
+		if c.ClientID == clientID {
+			c.sendDisconnected(&publisher.OnDisconnected{
+				ClientID:   clientID,
+				ReceivedAt: timeNow(),
+			})
+			return c.Conn.Close()
+		}
+	}
+
+	err := fmt.Errorf("client %s not found", clientID)
+	logger.Error(err.Error())
+	return err
+}
+
 func (s *Server) stop(l net.Listener) {
 	now := timeNow()
 	for _, c := range s.Clients {

@@ -20,13 +20,13 @@ func initialize() *amqp.Channel {
 
 	for _, exchange := range exchanges {
 		err = ch.ExchangeDeclare(
-			(string)(exchange), // name
-			"fanout",           // type
-			true,               // durable
-			false,              // auto-deleted
-			false,              // internal
-			false,              // no-wait
-			nil,                // arguments
+			exchange.ToString(), // name
+			"fanout",            // type
+			true,                // durable
+			false,               // auto-deleted
+			false,               // internal
+			false,               // no-wait
+			nil,                 // arguments
 		)
 	}
 
