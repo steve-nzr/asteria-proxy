@@ -7,5 +7,7 @@ RUN apk add git gcc g++
 
 COPY . .
 
+RUN go mod download
 RUN go get github.com/cortesi/modd/cmd/modd
+
 ENTRYPOINT [ "modd", "-f", "configs/modd/app.conf" ]

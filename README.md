@@ -1,5 +1,5 @@
 # asteria-proxy
-[![forthebadge](https://forthebadge.com/images/badges/built-by-developers.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/made-with-go.svg)](https://forthebadge.com) 
+[![forthebadge](https://forthebadge.com/images/badges/built-by-developers.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/made-with-go.svg)](https://forthebadge.com) [![Build Status](https://travis-ci.org/steve-nzr/asteria-proxy.svg?branch=master)](https://travis-ci.org/steve-nzr/asteria-proxy)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/steve-nzr/asteria-proxy/master/assets/banner.png" />
