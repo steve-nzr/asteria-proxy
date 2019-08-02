@@ -5,7 +5,7 @@ services:
     image: asteria-proxy:app
     build:
       context: .
-      target: pre-build
+      target: pre-builder
     env_file: configs/env/base.env
     entrypoint: go test -v ./...
     volumes:

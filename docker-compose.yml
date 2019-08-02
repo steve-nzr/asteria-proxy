@@ -5,7 +5,7 @@ services:
     image: asteria-proxy:app
     build:
       context: .
-      target: pre-build
+      target: pre-builder
     tty: true
     env_file: configs/env/base.env
     depends_on:
