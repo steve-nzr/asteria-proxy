@@ -3,7 +3,7 @@ package publisher
 import (
 	"encoding/json"
 
-	"github.com/steve-nzr/asteria-proxy/internal/channel"
+	"github.com/steve-nzr/asteria-proxy/pkg/rabbitmq/channel"
 	"github.com/streadway/amqp"
 )
 

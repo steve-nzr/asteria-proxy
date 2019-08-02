@@ -4,9 +4,9 @@ import (
 	"net"
 	"time"
 
-	"github.com/steve-nzr/asteria-proxy/internal/channel"
 	"github.com/steve-nzr/asteria-proxy/internal/publisher"
 	"github.com/steve-nzr/asteria-proxy/pkg/logger"
+	"github.com/steve-nzr/asteria-proxy/pkg/rabbitmq/channel"
 	"github.com/steve-nzr/asteria-proxy/pkg/server/srvbuf"
 )
 

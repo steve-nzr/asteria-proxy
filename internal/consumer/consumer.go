@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/steve-nzr/asteria-proxy/internal/channel"
 	"github.com/steve-nzr/asteria-proxy/pkg/logger"
+	"github.com/steve-nzr/asteria-proxy/pkg/rabbitmq/channel"
 	"github.com/steve-nzr/asteria-proxy/pkg/server"
 	"github.com/streadway/amqp"
 )
