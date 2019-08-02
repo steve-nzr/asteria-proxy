@@ -28,7 +28,7 @@ jobs:
           - master
           - /^v\d+\.\d+.\d+$/
       script:
-        - TAG=$(if [ $TRAVIS_BRANCH = "master" ]; then echo latest; else echo $TRAVIS_BRANCH; fi)
+        - TAG=$(if [ $TRAVIS_BRANCH = "master" ]; then echo latest; else echo $TRAVIS_BRANCH | cut -c 2-; fi)
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker build -t asteriatools/proxy:$TAG --target=runtime .
         - docker push asteriatools/proxy:$TAG
