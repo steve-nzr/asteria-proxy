@@ -1,5 +1,11 @@
 # asteria-proxy
-[![forthebadge](https://forthebadge.com/images/badges/built-by-developers.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/made-with-go.svg)](https://forthebadge.com) [![Build Status](https://travis-ci.org/steve-nzr/asteria-proxy.svg?branch=master)](https://travis-ci.org/steve-nzr/asteria-proxy)
+[![forthebadge](https://forthebadge.com/images/badges/built-by-developers.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/made-with-go.svg)](https://forthebadge.com)
+[![Build Status](https://travis-ci.org/steve-nzr/asteria-proxy.svg?branch=master)](https://travis-ci.org/steve-nzr/asteria-proxy)
+[![Docker Pulls](https://img.shields.io/docker/pulls/asteriatools/proxy.svg)](https://hub.docker.com/r/asteriatools/proxy/)
+[![GitHub issues](https://img.shields.io/github/issues/steve-nzr/asteria-proxy.svg)](https://github.com/steve-nzr/asteria-proxy/issues)
+[![GitHub stars](https://img.shields.io/github/stars/steve-nzr/asteria-proxy.svg?style=social&label=Star)](https://github.com/steve-nzr/asteria-proxy)
+[![GitHub watchers](https://img.shields.io/github/watchers/steve-nzr/asteria-proxy.svg?style=social&label=Watchers)](https://github.com/steve-nzr/asteria-proxy)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/steve-nzr/asteria-proxy/master/assets/banner.png" />
@@ -18,9 +24,9 @@ Docker (18.09+)
 Docker Compose (1.24+)
 ```
 
-Then run
+Create a compose file like this one
 ```sh
-$ docker-compose up -d
+
 ```
 
 or ...
@@ -29,6 +35,16 @@ Install rabbitmq & set your environnement variables reflecting those that are in
 ```
 
 Il will pull all the required images & build the project if necessary.
+
+## Running test suite
+- Unit tests
+```
+$ docker-compose -f docker-compose.test.yml run --rm unit
+```
+- Functional tests
+```
+$ not yet...
+```
 
 ## Documentation
 Advanced documentation can be found in the **docs** folder.

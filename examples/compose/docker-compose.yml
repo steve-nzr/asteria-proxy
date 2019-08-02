@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  app:
+    image: asteriatools/proxy:latest
+    env_file: .env
+    depends_on:
+      - rabbitmq
+    ports:
+      - 23000:23000
+
+  rabbitmq:
+    image: rabbitmq:3-alpine
