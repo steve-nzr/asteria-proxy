@@ -50,7 +50,7 @@ func exitOnError(err error) {
 func consumeDisconnect(s *server.Server, ch <-chan amqp.Delivery) {
 	logger.Debug("Consuming disconnect queue")
 	for m := range ch {
-		var msg OnDisconnect
+		var msg SendDisconnect
 		if err := json.Unmarshal(m.Body, &msg); err != nil {
 			logger.Error(err.Error())
 			m.Nack(false, false)
@@ -69,7 +69,7 @@ func consumeDisconnect(s *server.Server, ch <-chan amqp.Delivery) {
 func consumeMessage(s *server.Server, ch <-chan amqp.Delivery) {
 	logger.Debug("Consuming messages queue")
 	for m := range ch {
-		var msg OnMessage
+		var msg SendMessage
 		if err := json.Unmarshal(m.Body, &msg); err != nil {
 			logger.Error(err.Error())
 			m.Nack(false, false)
