@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/steve-nzr/asteria-proxy/internal/consumer"
+	"github.com/steve-nzr/asteria-proxy/pkg/rabbitmq/consumer"
 	"github.com/steve-nzr/asteria-proxy/pkg/server"
 )
 

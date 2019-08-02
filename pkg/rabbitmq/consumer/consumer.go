@@ -11,18 +11,12 @@ import (
 )
 
 var queues = map[channel.Exchange]*amqp.Queue{
-	channel.ClientDisconnectOut: getQueue(channel.ClientDisconnectOut),
-	channel.ClientMessageOut:    getQueue(channel.ClientMessageOut),
+	channel.ClientDisconnectOut: GetQueue(channel.ClientDisconnectOut),
+	channel.ClientMessageOut:    GetQueue(channel.ClientMessageOut),
 }
 
-func exitOnError(err error) {
-	if err != nil {
-		logger.Error(err.Error())
-		os.Exit(1)
-	}
-}
-
-func getQueue(exchange channel.Exchange) *amqp.Queue {
+// GetQueue declares & bind a new queue into the given exchange
+func GetQueue(exchange channel.Exchange) *amqp.Queue {
 	q, err := channel.Channel.QueueDeclare(
 		"",    // name
 		false, // durable
@@ -45,10 +39,24 @@ func getQueue(exchange channel.Exchange) *amqp.Queue {
 	return &q
 }
 
-func getConsumeChannel(exchange channel.Exchange) <-chan amqp.Delivery {
-	ch, err := channel.Channel.Consume(queues[exchange].Name, "", false, false, false, false, nil)
+// GetConsumeChannel gets the go's channel which relays rabbitmq events from a specific exchange
+// `
+//		var queues = map[channel.Exchange]*amqp.Queue{
+// 			channel.ClientDisconnectOut: GetQueue(channel.ClientDisconnectOut),
+// 			channel.ClientMessageOut:    GetQueue(channel.ClientMessageOut),
+// 		}
+// `
+func GetConsumeChannel(exchange channel.Exchange, queueList map[channel.Exchange]*amqp.Queue) <-chan amqp.Delivery {
+	ch, err := channel.Channel.Consume(queueList[exchange].Name, "", false, false, false, false, nil)
 	exitOnError(err)
 	return ch
+}
+
+func exitOnError(err error) {
+	if err != nil {
+		logger.Error(err.Error())
+		os.Exit(1)
+	}
 }
 
 func consumeDisconnect(s *server.Server, ch <-chan amqp.Delivery) {
@@ -89,6 +97,6 @@ func consumeMessage(s *server.Server, ch <-chan amqp.Delivery) {
 
 // Consume back-end queues (Disconnect & Messages)
 func Consume(s *server.Server) {
-	go consumeDisconnect(s, getConsumeChannel(channel.ClientDisconnectOut))
-	go consumeMessage(s, getConsumeChannel(channel.ClientMessageOut))
+	go consumeDisconnect(s, GetConsumeChannel(channel.ClientDisconnectOut, queues))
+	go consumeMessage(s, GetConsumeChannel(channel.ClientMessageOut, queues))
 }
