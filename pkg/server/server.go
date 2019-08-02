@@ -9,8 +9,8 @@ import (
 	"syscall"
 
 	"github.com/google/uuid"
-	"github.com/steve-nzr/asteria-proxy/internal/publisher"
 	"github.com/steve-nzr/asteria-proxy/pkg/logger"
+	"github.com/steve-nzr/asteria-proxy/pkg/rabbitmq/publisher"
 )
 
 // Server main struct
