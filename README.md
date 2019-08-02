@@ -25,8 +25,9 @@ Docker Compose (1.24+)
 ```
 
 ### docker and/or compose
-- [Compose] Go to [the compose example folder](https://github.com/steve-nzr/asteria-proxy/tree/master/examples/compose)
-- [Docker] `docker run --it -p 23000:23000 --env-file=.env asteriatools/proxy:latest`
+- **Sample with working receiver** [Here](https://github.com/steve-nzr/asteria-sample-receiver)
+- **Compose proxy+rabbitmq only** Go to [the compose example folder](https://github.com/steve-nzr/asteria-proxy/tree/master/examples/compose)
+- **Docker proxy only** `docker run --it -p 23000:23000 --env-file=.env asteriatools/proxy:latest`
 
 
 ### Kubernetes
