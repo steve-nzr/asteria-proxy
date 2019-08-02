@@ -1,4 +1,4 @@
- # Server SPECS
+ # Client SPECS
 
 ## Global informations
 - ClientID are V4 UUID generated at connection.
@@ -21,6 +21,6 @@ To broadcast a message, leave recipients empty.
 ```go
 {
     data: []byte
-    reason: string
+    recipients: []string
 }
 ```
