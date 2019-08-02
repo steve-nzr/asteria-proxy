@@ -23,7 +23,12 @@ jobs:
         - docker-compose -f docker-compose.test.yml run --rm unit
     - stage: build
       name: "Build & push image"
+      branches:
+        only:
+          - master
+          - /^\d{2}\.\d{2}.\d+$/
       script:
+        - TAG=$(if [ $TRAVIS_BRANCH = "master" ]; then echo latest; else echo $TRAVIS_BRANCH; fi)
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker build -t asteriatools/proxy:latest --target=runtime .
-        - docker push asteriatools/proxy:latest
+        - docker build -t asteriatools/proxy:$TAG --target=runtime .
+        - docker push asteriatools/proxy:$TAG
