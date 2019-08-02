@@ -24,12 +24,15 @@ Docker (18.09+)
 Docker Compose (1.24+)
 ```
 
-Create a compose file like this one
-```sh
+### docker and/or compose
+- [Compose] Go to [the compose example folder](https://github.com/steve-nzr/asteria-proxy/tree/master/examples/compose)
+- [Docker] `docker run --it -p 23000:23000 --env-file=.env asteriatools/proxy:latest`
 
-```
 
-or ...
+### Kubernetes
+- soon...
+
+### From scratch
 ```
 Install rabbitmq & set your environnement variables reflecting those that are in configs/env/base.env.
 ```
