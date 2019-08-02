@@ -1,0 +1,8 @@
+vendor/
+docs/
+assets/
+
+Dockerfile
+docker-*
+LICENSE
+README.md

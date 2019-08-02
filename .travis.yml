@@ -19,4 +19,11 @@ jobs:
   include:
     - stage: tests
       name: "Unit tests"
-      script: docker-compose -f docker-compose.test.yml run --rm unit
+      script:
+        - docker-compose -f docker-compose.test.yml run --rm unit
+    - stage: build
+      name: "Build & push image"
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker build -t asteriatools/proxy:latest --target=runtime .
+        - docker push asteriatools/proxy:latest

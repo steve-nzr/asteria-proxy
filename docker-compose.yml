@@ -3,7 +3,9 @@ version: '3.7'
 services:
   app:
     image: asteria-proxy:app
-    build: .
+    build:
+      context: .
+      target: pre-build
     tty: true
     env_file: configs/env/base.env
     depends_on:
