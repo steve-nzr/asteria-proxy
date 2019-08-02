@@ -10,13 +10,14 @@ import (
 	"github.com/streadway/amqp"
 )
 
-var queues = map[channel.Exchange]*amqp.Queue{
-	channel.ClientDisconnectOut: GetQueue(channel.ClientDisconnectOut),
-	channel.ClientMessageOut:    GetQueue(channel.ClientMessageOut),
+// GetConsumeChannel gets the go's channel which relays rabbitmq events from a specific exchange
+func GetConsumeChannel(exchange channel.Exchange) <-chan amqp.Delivery {
+	ch, err := channel.Channel.Consume(getQueue(exchange).Name, "", false, false, false, false, nil)
+	exitOnError(err)
+	return ch
 }
 
-// GetQueue declares & bind a new queue into the given exchange
-func GetQueue(exchange channel.Exchange) *amqp.Queue {
+func getQueue(exchange channel.Exchange) *amqp.Queue {
 	q, err := channel.Channel.QueueDeclare(
 		"",    // name
 		false, // durable
@@ -37,19 +38,6 @@ func GetQueue(exchange channel.Exchange) *amqp.Queue {
 	exitOnError(err)
 	logger.Debug("Queue %s binded to the channel", exchange.ToString())
 	return &q
-}
-
-// GetConsumeChannel gets the go's channel which relays rabbitmq events from a specific exchange
-// `
-//		var queues = map[channel.Exchange]*amqp.Queue{
-// 			channel.ClientDisconnectOut: GetQueue(channel.ClientDisconnectOut),
-// 			channel.ClientMessageOut:    GetQueue(channel.ClientMessageOut),
-// 		}
-// `
-func GetConsumeChannel(exchange channel.Exchange, queueList map[channel.Exchange]*amqp.Queue) <-chan amqp.Delivery {
-	ch, err := channel.Channel.Consume(queueList[exchange].Name, "", false, false, false, false, nil)
-	exitOnError(err)
-	return ch
 }
 
 func exitOnError(err error) {
@@ -97,6 +85,6 @@ func consumeMessage(s *server.Server, ch <-chan amqp.Delivery) {
 
 // Consume back-end queues (Disconnect & Messages)
 func Consume(s *server.Server) {
-	go consumeDisconnect(s, GetConsumeChannel(channel.ClientDisconnectOut, queues))
-	go consumeMessage(s, GetConsumeChannel(channel.ClientMessageOut, queues))
+	go consumeDisconnect(s, GetConsumeChannel(channel.ClientDisconnectOut))
+	go consumeMessage(s, GetConsumeChannel(channel.ClientMessageOut))
 }
