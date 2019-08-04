@@ -1,5 +1,12 @@
 package channel
 
+import (
+	"fmt"
+	"os"
+
+	"github.com/steve-nzr/asteria-proxy/pkg/logger"
+)
+
 // Exchange rabbitmq
 type Exchange string
 
@@ -8,17 +15,17 @@ func (e Exchange) ToString() string {
 	return (string)(e)
 }
 
-const (
+var (
 	// ClientConnected exchange
-	ClientConnected Exchange = "in_client_connected"
+	ClientConnected = getExchangeFromEnv("AMQP_TOPIC_IN_CONNECTED")
 	// ClientDisonnected exchange
-	ClientDisonnected Exchange = "in_client_disconnected"
+	ClientDisonnected = getExchangeFromEnv("AMQP_TOPIC_IN_DISCONNECTED")
 	// ClientMessage exchange
-	ClientMessage Exchange = "in_client_message"
+	ClientMessage = getExchangeFromEnv("AMQP_TOPIC_IN_MESSAGE")
 	// ClientDisconnectOut exchange
-	ClientDisconnectOut Exchange = "out_client_disconnect"
+	ClientDisconnectOut = getExchangeFromEnv("AMQP_TOPIC_OUT_DISCONNECT")
 	// ClientMessageOut exchange
-	ClientMessageOut Exchange = "out_client_message"
+	ClientMessageOut = getExchangeFromEnv("AMQP_TOPIC_OUT_MESSAGE")
 )
 
 // exchanges is list of topics
@@ -28,4 +35,13 @@ var exchanges = []Exchange{
 	ClientMessage,
 	ClientDisconnectOut,
 	ClientMessageOut,
+}
+
+func getExchangeFromEnv(key string) Exchange {
+	v, ok := os.LookupEnv(key)
+	if !ok || v == "" {
+		logger.Error(fmt.Errorf("cannot find environnement variable %s, or its empty", key).Error())
+		os.Exit(1)
+	}
+	return (Exchange)(v)
 }
