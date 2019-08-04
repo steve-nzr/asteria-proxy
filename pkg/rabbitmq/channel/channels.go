@@ -40,7 +40,7 @@ var exchanges = []Exchange{
 func getExchangeFromEnv(key string) Exchange {
 	v, ok := os.LookupEnv(key)
 	if !ok || v == "" {
-		logger.Error(fmt.Errorf("cannot find environnement variable %s, or its empty", key).Error())
+		logger.Error(fmt.Errorf("cannot find environment variable %s, or its empty", key).Error())
 		os.Exit(1)
 	}
 	return (Exchange)(v)
